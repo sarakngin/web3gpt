@@ -126,8 +126,13 @@
       return today.toISOString().split('T')[0];
     }
 
+    // Function to format numbers with commas (like 10,000,000)
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     function calculateEarnings() {
-      let firstAmount = parseFloat(document.getElementById("firstAmount").value);
+      let firstAmount = parseFloat(document.getElementById("firstAmount").value.replace(/,/g, ''));
       let startDateInput = document.getElementById("startDate").value;
       let earningPercentage = parseFloat(document.getElementById("earningPercentage").value);
       let days = parseInt(document.getElementById("numDays").value);
@@ -151,26 +156,37 @@
         let row = table.insertRow();
         row.insertCell(0).innerText = i + 1;
         row.insertCell(1).innerText = formatDate(startDate);
-        row.insertCell(2).innerText = "$" + currentAmount.toFixed(2);
-        row.insertCell(3).innerText = "$" + dailyEarning.toFixed(2);
+        row.insertCell(2).innerText = "$" + formatNumber(currentAmount.toFixed(2));
+        row.insertCell(3).innerText = "$" + formatNumber(dailyEarning.toFixed(2));
 
         startDate.setDate(startDate.getDate() + 1);
       }
 
-      // Add a final row to display the total earnings and merge cells
+      // Add a final row to display the custom total earnings and merge cells
       let totalRow = table.insertRow();
       let totalCell = totalRow.insertCell(0);
       totalCell.setAttribute("colspan", "3");
       totalCell.classList.add("total-cell");
-      totalCell.innerText = "TOTAL";
+      totalCell.innerText = "TOTAL OF NOT QUANTIFY";
+
       let earningsCell = totalRow.insertCell(1);
-      earningsCell.innerText = "$" + totalEarnings.toFixed(2);
+      let totalAmount = (firstAmount * earningPercentage * days) / 100; // Calculate total earnings
+      earningsCell.innerText = "$" + formatNumber(totalAmount.toFixed(2));
       earningsCell.classList.add("total-cell");
     }
 
     window.onload = function () {
       document.getElementById("startDate").value = getTodayDate();
     };
+
+    // Format the input fields with commas when they lose focus
+    document.getElementById("firstAmount").addEventListener("blur", function () {
+      this.value = formatNumber(this.value.replace(/,/g, ''));
+    });
+
+    document.getElementById("earningPercentage").addEventListener("blur", function () {
+      this.value = formatNumber(this.value.replace(/,/g, ''));
+    });
   </script>
 </head>
 
