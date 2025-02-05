@@ -13,7 +13,7 @@
       margin: 0;
       padding: 0;
     }
-    
+
     .container {
       background: white;
       padding: 20px;
@@ -22,18 +22,18 @@
       max-width: 400px;
       margin: 50px auto;
     }
-    
+
     h2 {
       color: #333;
     }
-    
+
     label {
       display: block;
       font-weight: bold;
       margin-top: 10px;
       text-align: center;
     }
-    
+
     input {
       width: 100%;
       padding: 10px;
@@ -43,12 +43,12 @@
       text-align: center;
       font-size: 16px;
     }
-    
+
     input:focus {
       border-color: #28a745;
       outline: none;
     }
-    
+
     button {
       width: 100%;
       padding: 10px;
@@ -60,42 +60,56 @@
       font-size: 16px;
       cursor: pointer;
     }
-    
+
     button:hover {
       background-color: #218838;
     }
-    
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       background: white;
     }
-    
-    th, td {
+
+    th,
+    td {
       border: 1px solid #ddd;
       padding: 10px;
       text-align: center;
     }
-    
+
     th {
       background-color: #28a745;
       color: white;
     }
-    
+
     input[type="date"] {
       text-align: center;
     }
-    
+
     img.logo {
       width: 150px;
       margin-bottom: 20px;
     }
-    
+
     .footer {
       margin-top: 10px;
       font-size: 12px;
       font-style: italic;
+    }
+
+    .total-row {
+      background-color: #f39c12; /* Changed to a new color */
+      color: white;
+      font-weight: bold;
+    }
+
+    .total-cell {
+      text-align: center;
+      font-size: 18px;
+      padding: 10px;
+      border: none;
     }
   </style>
   <script>
@@ -127,20 +141,34 @@
 
       let startDate = new Date(startDateInput);
       let currentAmount = firstAmount;
+      let totalEarnings = 0; // Track total earnings
 
       for (let i = 0; i < days; i++) {
         let dailyEarning = currentAmount * (earningPercentage / 100);
         currentAmount += dailyEarning;
+        totalEarnings += dailyEarning; // Add daily earning to total
+
         let row = table.insertRow();
         row.insertCell(0).innerText = i + 1;
         row.insertCell(1).innerText = formatDate(startDate);
         row.insertCell(2).innerText = "$" + currentAmount.toFixed(2);
         row.insertCell(3).innerText = "$" + dailyEarning.toFixed(2);
+
         startDate.setDate(startDate.getDate() + 1);
       }
+
+      // Add a final row to display the total earnings and merge cells
+      let totalRow = table.insertRow();
+      let totalCell = totalRow.insertCell(0);
+      totalCell.setAttribute("colspan", "3");
+      totalCell.classList.add("total-cell");
+      totalCell.innerText = "TOTAL";
+      let earningsCell = totalRow.insertCell(1);
+      earningsCell.innerText = "$" + totalEarnings.toFixed(2);
+      earningsCell.classList.add("total-cell");
     }
 
-    window.onload = function() {
+    window.onload = function () {
       document.getElementById("startDate").value = getTodayDate();
     };
   </script>
@@ -164,7 +192,7 @@
       <a href="https://t.me/+85510431249" target="_blank">Created by: <i>Bi AQ</i></a>
     </div>
   </div>
-  
+
   <table>
     <thead>
       <tr>
