@@ -1,226 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="km">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web3 GPT Calculator by Bi AQ</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: 50px auto;
-    }
-
-    h2 {
-      color: #333;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    input:focus {
-      border-color: #28a745;
-      outline: none;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-      background-color: #28a745;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-    }
-
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #28a745;
-      color: white;
-    }
-
-    input[type="date"] {
-      text-align: center;
-    }
-
-    img.logo {
-      width: 150px;
-      margin-bottom: 20px;
-    }
-
-    .footer {
-      margin-top: 10px;
-      font-size: 12px;
-      font-style: italic;
-    }
-
-    .total-row {
-      background-color: #f39c12; /* Changed to a new color */
-      color: white;
-      font-weight: bold;
-    }
-
-    .total-cell {
-      text-align: center;
-      font-size: 18px;
-      padding: 10px;
-      border: none;
-    }
-  </style>
-  <script>
-    function formatDate(date) {
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      let day = date.getDate().toString().padStart(2, '0');
-      let month = months[date.getMonth()];
-      let year = date.getFullYear().toString().slice(-2);
-      return `${day}-${month}-${year}`;
-    }
-
-    function getTodayDate() {
-      let today = new Date();
-      return today.toISOString().split('T')[0];
-    }
-
-    // Function to format numbers with commas (like 10,000,000)
-    function formatNumber(num) {
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function calculateEarnings() {
-      let firstAmount = parseFloat(document.getElementById("firstAmount").value.replace(/,/g, ''));
-      let startDateInput = document.getElementById("startDate").value;
-      let earningPercentage = parseFloat(document.getElementById("earningPercentage").value);
-      let days = parseInt(document.getElementById("numDays").value);
-      let table = document.getElementById("results");
-      table.innerHTML = "";
-
-      if (isNaN(firstAmount) || firstAmount <= 0 || startDateInput === "" || isNaN(earningPercentage) || isNaN(days) || days <= 0) {
-        alert("Please fill in all blank");
-        return;
-      }
-
-      let startDate = new Date(startDateInput);
-      let currentAmount = firstAmount;
-      let totalEarnings = 0; // Track total earnings
-
-      for (let i = 0; i < days; i++) {
-        let dailyEarning = currentAmount * (earningPercentage / 100);
-        currentAmount += dailyEarning;
-        totalEarnings += dailyEarning; // Add daily earning to total
-
-        let row = table.insertRow();
-        row.insertCell(0).innerText = i + 1;
-        row.insertCell(1).innerText = formatDate(startDate);
-        row.insertCell(2).innerText = "$" + formatNumber(currentAmount.toFixed(2));
-        row.insertCell(3).innerText = "$" + formatNumber(dailyEarning.toFixed(2));
-
-        startDate.setDate(startDate.getDate() + 1);
-      }
-
-      // Add a final row to display the custom total earnings and merge cells
-      let totalRow = table.insertRow();
-      let totalCell = totalRow.insertCell(0);
-      totalCell.setAttribute("colspan", "3");
-      totalCell.classList.add("total-cell");
-      totalCell.innerText = "TOTAL OF NOT QUANTIFY";
-
-      let earningsCell = totalRow.insertCell(1);
-      let totalAmount = (firstAmount * earningPercentage * days) / 100; // Calculate total earnings
-      earningsCell.innerText = "$" + formatNumber(totalAmount.toFixed(2));
-      earningsCell.classList.add("total-cell");
-    }
-
-    window.onload = function () {
-      document.getElementById("startDate").value = getTodayDate();
-    };
-
-    // Format the input fields with commas when they lose focus
-    document.getElementById("firstAmount").addEventListener("blur", function () {
-      this.value = formatNumber(this.value.replace(/,/g, ''));
-    });
-
-    document.getElementById("earningPercentage").addEventListener("blur", function () {
-      this.value = formatNumber(this.value.replace(/,/g, ''));
-    });
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>គណនាការរកប្រាក់តាម Web3 GPT</title>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Battambang', sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: #1E1E1E;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            background: #2A2A2A;
+            color: white;
+        }
+        button {
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .calculate {
+            background: #4CAF50;
+            color: white;
+        }
+        .reset {
+            background: #f44336;
+            color: white;
+        }
+        .icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: center;
+        }
+        .summary-box {
+            margin-top: 20px;
+            background: #2A2A2A;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <img class="logo" src="https://web3-gpt.pics/img//upload/20240915/961d40b990234c0daaf417aff887bb02.png" alt="Web3 GPT Logo">
-    <h2>Web3GPT Earnings Calculator</h2>
-    <label>First Amount ($):</label>
-    <input type="number" id="firstAmount" step="0.01" placeholder="Enter initial amount">
-    <label>First Date:</label>
-    <input type="date" id="startDate">
-    <label>Earning Percentage (%):</label>
-    <input type="number" id="earningPercentage" step="0.01" placeholder="Enter percentage">
-    <label>Number of Days:</label>
-    <input type="number" id="numDays" placeholder="Enter number of days">
-    <button onclick="calculateEarnings()">Calculate</button>
-
-    <div class="footer">
-      <a href="https://t.me/+85510431249" target="_blank">Created by: <i>Bi AQ</i></a>
+    <div class="container">
+        <h2><i class="fas fa-coins icon"></i> គណនាការរកប្រាក់តាម Web3 GPT</h2>
+        <label><i class="fas fa-dollar-sign icon"></i> ចំនួនទុនវិនិយោគ ($)</label>
+        <input type="number" id="investment" placeholder="បញ្ចូលចំនួនទុន" required>
+        
+        <label><i class="fas fa-calendar-day icon"></i> ថ្ងៃចាប់ផ្តើម</label>
+        <input type="date" id="startDate" onchange="updateDates()">
+        
+        <label><i class="fas fa-calendar-check icon"></i> ថ្ងៃបញ្ចប់</label>
+        <input type="date" id="endDate" onchange="updateDays()">
+        
+        <label><i class="fas fa-clock icon"></i> ចំនួនថ្ងៃ</label>
+        <input type="number" id="days" oninput="updateEndDate()">
+        
+        <label><i class="fas fa-percentage icon"></i> ភារយកចំណេញក្នុងមួយថ្ងៃ (%)</label>
+        <input type="number" id="dailyRate" placeholder="បញ្ចូលភារយក (%)" required>
+        
+        <button class="calculate" onclick="calculateEarnings()">គណនា</button>
+        <button class="reset" onclick="resetForm()">សារដើម</button>
     </div>
-  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Date</th>
-        <th>Increase Amount</th>
-        <th>Daily Earning</th>
-      </tr>
-    </thead>
-    <tbody id="results"></tbody>
-  </table>
+    <div class="summary-box" id="summary"></div>
+    <table id="earningsTable"></table>
 
+    <script>
+        function updateDates() {
+            let startDate = document.getElementById('startDate').value;
+            if (startDate) {
+                let endDate = document.getElementById('endDate').value;
+                if (endDate) {
+                    let diff = luxon.DateTime.fromISO(endDate).diff(luxon.DateTime.fromISO(startDate), 'days').days;
+                    document.getElementById('days').value = Math.round(diff);
+                }
+            }
+        }
+
+        function updateEndDate() {
+            let startDate = document.getElementById('startDate').value;
+            let days = document.getElementById('days').value;
+            if (startDate && days) {
+                let newEndDate = luxon.DateTime.fromISO(startDate).plus({ days: parseInt(days) }).toISODate();
+                document.getElementById('endDate').value = newEndDate;
+            }
+        }
+
+        function calculateEarnings() {
+            let investment = parseFloat(document.getElementById('investment').value);
+            let dailyRate = parseFloat(document.getElementById('dailyRate').value);
+            let days = parseInt(document.getElementById('days').value);
+            let startDate = document.getElementById('startDate').value;
+            let endDate = document.getElementById('endDate').value;
+
+            if (isNaN(investment) || isNaN(dailyRate) || isNaN(days) || !startDate || !endDate) {
+                alert('សូមបញ្ចូលព័ត៌មានទាំងអស់!');
+                return;
+            }
+
+            let earningsData = [];
+            let currentDate = luxon.DateTime.fromISO(startDate);
+            let totalEarnings = 0;
+            let balance = investment;
+            let firstDayEarning = (investment * dailyRate) / 100;
+
+            for (let i = 1; i <= days; i++) {
+                let earnings = (balance * dailyRate) / 100;
+                totalEarnings += earnings;
+                balance += earnings;
+                earningsData.push({
+                    day: i,
+                    date: currentDate.toISODate(),
+                    earnings: earnings.toFixed(2),
+                    balance: balance.toFixed(2)
+                });
+                currentDate = currentDate.plus({ days: 1 });
+            }
+
+            let nonCompoundEarnings = firstDayEarning * days;
+
+            displayEarnings(earningsData, totalEarnings, nonCompoundEarnings);
+        }
+
+        function displayEarnings(earningsData, totalEarnings, nonCompoundEarnings) {
+            let summary = document.getElementById('summary');
+            summary.innerHTML = `
+                <p><strong>ចំណេញសរុប:</strong> $${totalEarnings.toFixed(2)}</p>
+                <p><strong>ការប្រាក់ដោយមិន Compound:</strong> $${nonCompoundEarnings.toFixed(2)}</p>
+            `;
+
+            let table = document.getElementById('earningsTable');
+            table.innerHTML = `<tr>
+                <th>ថ្ងៃ</th>
+                <th>កាលបរិច្ឆេទ</th>
+                <th>ប្រាក់ចំណេញ ($)</th>
+                <th>សមតុល្យ ($)</th>
+            </tr>`;
+            earningsData.forEach(item => {
+                let row = table.insertRow();
+                row.innerHTML = `<td>${item.day}</td><td>${item.date}</td><td>${item.earnings}</td><td>${item.balance}</td>`;
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('investment').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('days').value = '';
+            document.getElementById('dailyRate').value = '';
+            document.getElementById('summary').innerHTML = '';
+            document.getElementById('earningsTable').innerHTML = '';
+        }
+    </script>
 </body>
-
 </html>
